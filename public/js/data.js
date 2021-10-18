@@ -16,6 +16,23 @@ function main() {
       })
   };
 
+  const getSpesificLetter = (letterId) => {
+    fetch(`http://127.0.0.1:8000/api/letter/${letterId}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJson => {
+        if(responseJson.error) {
+          showResponseMessage(responseJson.message);
+        } else {
+          renderModalEdit(responseJson.data);
+        }
+      })
+      .catch(error => {
+        showResponseMessage(error);
+      })
+  }
+
   const insertLetter = (letter) => {
     fetch('http://127.0.0.1:8000/api/letter', {
       method: "POST",
@@ -30,6 +47,7 @@ function main() {
       .then(responseJson => {
         showResponseMessage(responseJson.message);
         getLetter();
+        closeModal();
       })
       .catch(error => {
         // showResponseMessage(error);
@@ -55,45 +73,97 @@ function main() {
         })
   };
 
-  const printLetter = (letterId) => {
-    fetch(`http://127.0.0.1:8000/api/letter/${letterId}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
+  const renderModalEdit = (letter) => {
+    const modalElement = document.querySelector('#modalEdit');
+    const content = `
+      <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mb-1">
+              <label for="jabatan_penerima" class="form-label">Jabatan Penerima</label>
+              <input type="text" class="form-control" name="jabatan_penerima" id="jabatan_penerima" value = "${letter.jabatan_penerima}" required>
+            </div>
+          </div>
+           <div class="col">
+            <div class="mb-1">
+              <label for="alamat_perusahaan" class="form-label">Alamat Perusahaan</label>
+              <input type="text" class="form-control" name="alamat_perusahaan" id="alamat_perusahaan" value = "${letter.alamat_perusahaan}"" required>
+            </div>
+           </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-1">
+              <label for="nama_lengkap_pengirim" class="form-label">Nama Lengkap Pengirim</label>
+              <input type="text" class="form-control" name="nama_lengkap_pengirim" id="nama_lengkap_pengirim" value = "${letter.nama_lengkap_pengirim}"" required>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-1">
+              <label for="alamat_pengirim" class="form-label">Alamat Pengirim</label>
+              <input type="text" class="form-control" name="alamat_pengirim" id="alamat_pengirim" value = "${letter.alamat_pengirim}"" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-1">
+              <label for="jabatan" class="form-label">Jabatan Pengirim</label>
+              <input type="text" class="form-control" name="jabatan" id="jabatan" value = "${letter.jabatan}"" required>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-1">
+              <label for="tgl_surat" class="form-label">Tanggal Surat</label>
+              <input type="date" class="form-control" name="tgl_surat" id="tgl_surat" value = "${letter.tgl_surat}" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-1">
+              <label for="alasan_izin" class="form-label">Alasan Izin</label>
+              <input type="text" class="form-control" name="alasan_izin" id="alasan_izin" value = ${letter.alasan_izin} required></input>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-1">
+              <label for="lama_izin" class="form-label">Lama Izin (Hari)</label>
+              <input type="text" class="form-control" name="lama_izin" id="lama_izin" value = "${letter.lama_izin}" required></input>
+            </div>
+          </div>
+        </div>
+        </div>
+          <button class="btn btn-primary" id="btnSave">Save</button>
+        </div>
+    `
+    modalElement.innerHTML = content;
+    const btnSave = document.querySelector("#modalEdit > .modal-content > #btnSave");
+    
+    modalElement.style.display = 'block';
+
+    const btnExit = document.querySelector("#modalEdit > .modal-content > .close")
+    btnExit.addEventListener("click", function() {
+      closeModal();
+      modalElement.innerHTML = "";
     })
-        .then(response => {
-            return response.json();
-        })
-        .then(responseJson => {
-            showResponseMessage(responseJson.message);
-            getLetter();
-        })
-        .catch(error => {
-            showResponseMessage(error);
-        })
+
   }
+
+
   const renderAllLetter = (letters) => {
     const listLetterElement = document.querySelector('#listLetter');
     listLetterElement.innerHTML = "";
     if(letters != ''){
       letters.forEach(letter => {
-        // listLetterElement.innerHTML += `
-        // <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top: 12px;">
-        //     <div class="card">
-        //         <div class="card-body">
-        //             <h5>(${letter.tgl_surat}) ${letter.penerima}</h5>
-        //             <p>${letter.pengirim}</p>
-        //             <button type="button" class="btn btn-danger button-delete" id="${letter.id}">Hapus</button>
-        //         </div>
-        //     </div>
-        // </div>`
         listLetterElement.innerHTML += `
         <tr>
             <td>${letter.tgl_surat}</td>
             <td>${letter.nama_lengkap_pengirim}</td>
             <td>${letter.alasan_izin}</td>
-            <td> <button type="button" class="btn btn-success button-success" id="${letter.id}">Edit</button>
+            <td> <button type="button" class="btn btn-success button-edit" id="${letter.id}">Edit</button>
             <button type="button" class="btn btn-primary button-print" onclick="window.open('/letter/print/${letter.id}', '_blank')" id="${letter.id}">Print</button>
             <button type="button" class="btn btn-danger button-delete" id="${letter.id}">Delete</button>
             </td>
@@ -107,7 +177,7 @@ function main() {
         </tr>
         `
     }
-    
+
     const buttons = document.querySelectorAll(".button-delete");
     buttons.forEach(button => {
         button.addEventListener("click", event => {
@@ -116,9 +186,24 @@ function main() {
         })
     });
 
+    const btnEdit = document.querySelectorAll(".button-edit");
+    btnEdit.forEach(button => {
+      button.addEventListener("click", event => {
+          const letterId = event.target.id;
+          getSpesificLetter(letterId);
+      })
+    })
+
   };
 
-    
+  const closeModal = () => {
+    const modal = document.querySelector("#modal")
+    const modalEdit = document.querySelector("#modalEdit")
+
+    modal.style.display = "none";
+    modalEdit.style.display = "none";
+  }
+
 
   const showResponseMessage = (message = "Check your internet connection") => {
     alert(`${message}`);
@@ -157,7 +242,7 @@ function main() {
     });
 
     btnExit.addEventListener("click", function() {
-      modal.style.display = "none";
+      closeModal();
     })
 
     window.onclick = function(event) {

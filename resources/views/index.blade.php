@@ -82,10 +82,8 @@
         </div>
     </div>
 
-    {{-- <form action="" method="post" enctype="multipart/form-data">
-      @csrf --}}
+    <div class="modalEdit" id="modalEdit"></div>
 
-    {{-- </form> --}}
     <div class="container">
       <table id="tabel-data" class="table table-striped table-bordered" width="100%" cellspacing="0">
         <thead>
@@ -97,24 +95,6 @@
             </tr>
         </thead>
         <tbody id="listLetter">
-            {{-- @foreach ($tickets as $ticket)
-                @foreach ($data as $item)
-                    @if ($ticket->email === $item->email and $ticket->intention_status === '1')
-                    <tr>
-                        <td>{{$item->email}}</td>
-                        <td>{{$item->team_name}}</td>
-                        <td>{{$item->team_leader}}</td>
-                        <td>{{$item->team_member_1}}</td>
-                        <td>{{$item->team_member_2}}</td>
-                        <td>{{$item->team_member_3}}</td>
-                        <td>{{$item->team_member_4}}</td>
-                        <td><a href="{{ asset('storage/images/id_card/intention/'. $item->id_card) }}" target="_blank">Show</a></td>
-                        <td><a href="{{ asset('storage/images/payment_confirmation/intention/'. $item->proof_payment) }}" target="_blank">Show</a></td>
-                        <td><a href="/dashboard/intention/edit/{{ $item->id }}?from=unconfirmed">Edit</a> | <a href="/dashboard/intention/unconfirmed/{{ $item->email }}">Confirm</a></td>
-                    </tr>
-                    @endif 
-                @endforeach
-            @endforeach --}}
         </tbody>
       </table>
       <button type="button" class="btn btn-primary button-primary" id="btnModal">Tambah Surat</button>

@@ -78,7 +78,12 @@ class MailController extends Controller
      */
     public function show($id)
     {
-        
+        $data = Mail::where('id', $id)->first();
+        return response()->json([
+            'error' => false,
+            'message' => 'success',
+            'data'=> $data
+        ]);
     }
 
     /**
