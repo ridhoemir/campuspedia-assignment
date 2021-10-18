@@ -16,9 +16,6 @@
 </head>
 <body>
   <div style="float: right; margin-top: -10px"><h4>{{$letter_resource->tgl_surat}}</h4></div>
-  {{-- <h1>{{$letter_resource->penerima}}</h1>
-  <h1>{{$letter_resource->perusahaan}}</h1>
-  <h1>{{$letter_resource->tgl_surat}}</h1> --}}
   <div class="tujuan-surat" style="margin-top: 10px">
     <h4>Yth. <br>{{$letter_resource->jabatan_penerima}} <br>{{$letter_resource->alamat_perusahaan}}</h4>
   </div>

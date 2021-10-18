@@ -16,70 +16,14 @@
   <title>Pembuatan Surat</title>
 </head>
 <body>
+  <nav class="navbar ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        Generate Surat
+      </a>
+    </div>
+  </nav>
   <div id="modal" class="modal">
-    <!-- Modal content -->
-    {{-- <div class="modal-content">
-      <span class="close">&times;</span>
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="mb-1">
-              <label for="jabatan_penerima" class="form-label">Jabatan Penerima</label>
-              <input type="text" class="form-control" name="jabatan_penerima" id="jabatan_penerima" required>
-            </div>
-          </div>
-           <div class="col">
-            <div class="mb-1">
-              <label for="alamat_perusahaan" class="form-label">Alamat Perusahaan</label>
-              <input type="text" class="form-control" name="alamat_perusahaan" id="alamat_perusahaan" required>
-            </div>
-           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="mb-1">
-              <label for="nama_lengkap_pengirim" class="form-label">Nama Lengkap Pengirim</label>
-              <input type="text" class="form-control" name="nama_lengkap_pengirim" id="nama_lengkap_pengirim" required>
-            </div>
-          </div>
-          <div class="col">
-            <div class="mb-1">
-              <label for="alamat_pengirim" class="form-label">Alamat Pengirim</label>
-              <input type="text" class="form-control" name="alamat_pengirim" id="alamat_pengirim" required>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="mb-1">
-              <label for="jabatan" class="form-label">Jabatan Pengirim</label>
-              <input type="text" class="form-control" name="jabatan" id="jabatan" required>
-            </div>
-          </div>
-          <div class="col">
-            <div class="mb-1">
-              <label for="tgl_surat" class="form-label">Tanggal Surat</label>
-              <input type="date" class="form-control" name="tgl_surat" id="tgl_surat" required>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="mb-1">
-              <label for="alasan_izin" class="form-label">Alasan Izin</label>
-              <input type="text" class="form-control" name="alasan_izin" id="alasan_izin" required></input>
-            </div>
-          </div>
-          <div class="col">
-            <div class="mb-1">
-              <label for="lama_izin" class="form-label">Lama Izin (Hari)</label>
-              <input type="text" class="form-control" name="lama_izin" id="lama_izin" required></input>
-            </div>
-          </div>
-        </div>
-        </div>
-          <button class="btn btn-primary" id="btnSave">Submit</button>
-        </div> --}}
     </div>
 
     <div class="modalEdit" id="modalEdit"></div>
