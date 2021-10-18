@@ -106,7 +106,38 @@ class MailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'jabatan_penerima' => 'required',
+            'alamat_perusahaan' => 'required',
+            'nama_lengkap_pengirim' => 'required',
+            'alamat_pengirim' => 'required',
+            'jabatan' => 'required',
+            'alasan_izin' => 'required',
+            'lama_izin' => 'required',
+            'tgl_surat' => 'required|date'
+        ]);
+        if($validate->fails()) {
+            return response()->json([
+                'error' => true,
+                'message' => $validate->errors()
+            ]);
+        };
+        $letter = Mail::where('id', $id)->update([
+            'jabatan_penerima' => $request->jabatan_penerima,
+            'alamat_perusahaan' => $request->alamat_perusahaan,
+            'nama_lengkap_pengirim' => $request->nama_lengkap_pengirim,
+            'alamat_pengirim' => $request->alamat_pengirim,
+            'jabatan' => $request->jabatan,
+            'alasan_izin' => $request->alasan_izin,
+            'lama_izin' => $request->lama_izin,
+            'tgl_surat' => $request->tgl_surat
+        ]);
+        if($letter) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Surat berhasil diperbaharui'
+            ]);
+        };
     }
 
     /**
